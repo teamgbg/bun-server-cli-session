@@ -1,0 +1,70 @@
+{
+  "_generated": {
+    "system": "package-json@1.0.0",
+    "status": "generated",
+    "edit": "edit src/ \u2014 dependencies and exports derive from imports; everything else preserved"
+  },
+  "name": "@teamscala/cli-session",
+  "capability": "CLI session management \u2014 mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
+  "tier": "server",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "CLI session management \u2014 mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
+  "sideEffects": false,
+  "imports": {
+    "#cli-session/*": "./src/*",
+    "#cli-session/*.ts": "./src/*.ts"
+  },
+  "files": [
+    "src"
+  ],
+  "dependencies": {
+    "@teamscala/db": "*",
+    "@teamscala/db-validation": "*",
+    "@teamscala/logger": "*",
+    "@teamscala/os": "*",
+    "@teamscala/session-contracts": "*",
+    "@teamscala/tmux-session": "*",
+    "@teamscala/cli-protocol": "*",
+    "@teamscala/cli-session-daemon": "*"
+  },
+  "devDependencies": {
+    "bun-types": "*",
+    "@happy-dom/global-registrator": "*",
+    "@testing-library/react": "*"
+  },
+  "exports": {
+    "./boot/mount": {
+      "types": "./src/boot/mount.d.ts",
+      "default": "./src/boot/mount.ts"
+    },
+    "./boot/mount.ts": {
+      "types": "./src/boot/mount.d.ts",
+      "default": "./src/boot/mount.ts"
+    },
+    "./registry": {
+      "types": "./src/registry.d.ts",
+      "default": "./src/registry.ts"
+    },
+    "./session-picker-url": {
+      "types": "./src/session-picker-url.d.ts",
+      "default": "./src/session-picker-url.ts"
+    },
+    "./tmux-label": {
+      "types": "./src/tmux-label.d.ts",
+      "default": "./src/tmux-label.ts"
+    },
+    "./tmux-policy-sync": {
+      "types": "./src/tmux-policy-sync.d.ts",
+      "default": "./src/tmux-policy-sync.ts"
+    },
+    "./types": {
+      "types": "./src/types.d.ts",
+      "default": "./src/types.ts"
+    }
+  },
+  "repository": "https://github.com/teamgbg/bun-server-cli-session",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  }
+}
