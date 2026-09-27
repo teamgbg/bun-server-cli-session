@@ -7,8 +7,8 @@
  *   - Tmux policy sync boot hook
  *   - Session-picker daemon: boot hook + RPC routes
  *
- * SDK factories are registered by each per-SDK adapter package's own mount
- * (e.g. @teamscala/opencode), not by this package — cli-session is generic
+ * SDK factories are registered by each per-SDK adapter package's own mount,
+ * not by this package — cli-session is generic
  * over which CLI/SDK is in use.
  */
 
@@ -20,7 +20,6 @@ import { readCodexHistory } from "@teamscala/cli-protocol/history-readers/codex"
 import { parseLine as parseClaudeStreamJson } from "@teamscala/cli-protocol/parsers/claude-stream-json";
 import { parseLine as parseCodexJsonl } from "@teamscala/cli-protocol/parsers/codex-jsonl";
 import { parseAcpFrame } from "@teamscala/cli-protocol/parsers/gemini-acp";
-import { parseLine as parseOpenCode } from "@teamscala/cli-protocol/parsers/opencode";
 
 export async function mount(ctx: MountContext): Promise<void> {
 	registerHistoryReader("claude-code", readClaudeHistory);
@@ -29,7 +28,6 @@ export async function mount(ctx: MountContext): Promise<void> {
 	registerParser("claude-stream-json", parseClaudeStreamJson);
 	registerParser("codex-jsonl", parseCodexJsonl);
 	registerParser("gemini-acp", parseAcpFrame);
-	registerParser("opencode", parseOpenCode);
 
 	ctx.registerBootHook("tmux-target-policy-sync", async () => {
 		const { syncTmuxTargetPolicy } = await import("../tmux-policy-sync");
