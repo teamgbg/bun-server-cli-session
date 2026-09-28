@@ -6,18 +6,12 @@
  *   - History readers + parsers
  *   - Tmux policy sync boot hook
  *
- * The TypeScript session-picker daemon is RETIRED (apps/session-picker,
- * `session-picker-is-one-surface` and `session-picker-source-is-published-package`):
- * the picker is one Rust binary, tabs open only through fleetctl, and there is no
- * HTTP daemon, no TS middleman and no second process. This mount used to register a
- * `session-picker-daemon` boot hook importing `../session-daemon/routes.ts`,
- * `../session-daemon/fleet-lifecycle-routes.ts` and `../session-daemon/daemon.ts` —
- * three modules that exist nowhere in the workspace, left behind by the
- * cli-session-capture monorepo split (94ff7b8) that never carried them over. Every
- * consumer that mounted this package then FATALed at boot with
- * `Cannot find module '../session-daemon/routes.ts'` (measured 2026-09-28, the
- * scala-agents-ui prod container move). The hook is deleted rather than guarded: a
- * capability that doctrine has retired must not be importable at all.
+ * The TypeScript session-picker daemon is RETIRED (apps/session-picker): the
+ * picker is one Rust binary, tabs open only through fleetctl, no HTTP daemon
+ * and no TS middleman. This mount used to register a `session-picker-daemon`
+ * boot hook importing three `../session-daemon/*` modules that exist nowhere
+ * in the workspace, so every consumer FATALed at boot (measured 2026-09-28,
+ * the scala-agents-ui prod container move). Deleted, not guarded.
  *
  * SDK factories are registered by each per-SDK adapter package's own mount,
  * not by this package — cli-session is generic
