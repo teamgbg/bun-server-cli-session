@@ -5,7 +5,19 @@
  * Boot-time mount for @teamscala/cli-session. Registers:
  *   - History readers + parsers
  *   - Tmux policy sync boot hook
- *   - Session-picker daemon: boot hook + RPC routes
+ *
+ * The TypeScript session-picker daemon is RETIRED (apps/session-picker,
+ * `session-picker-is-one-surface` and `session-picker-source-is-published-package`):
+ * the picker is one Rust binary, tabs open only through fleetctl, and there is no
+ * HTTP daemon, no TS middleman and no second process. This mount used to register a
+ * `session-picker-daemon` boot hook importing `../session-daemon/routes.ts`,
+ * `../session-daemon/fleet-lifecycle-routes.ts` and `../session-daemon/daemon.ts` —
+ * three modules that exist nowhere in the workspace, left behind by the
+ * cli-session-capture monorepo split (94ff7b8) that never carried them over. Every
+ * consumer that mounted this package then FATALed at boot with
+ * `Cannot find module '../session-daemon/routes.ts'` (measured 2026-09-28, the
+ * scala-agents-ui prod container move). The hook is deleted rather than guarded: a
+ * capability that doctrine has retired must not be importable at all.
  *
  * SDK factories are registered by each per-SDK adapter package's own mount,
  * not by this package — cli-session is generic
@@ -32,17 +44,6 @@ export async function mount(ctx: MountContext): Promise<void> {
 	ctx.registerBootHook("tmux-target-policy-sync", async () => {
 		const { syncTmuxTargetPolicy } = await import("../tmux-policy-sync");
 		await syncTmuxTargetPolicy();
-	});
-
-	ctx.registerBootHook("session-picker-daemon", async () => {
-		const { registerDaemonRoutes } = await import("../session-daemon/routes.ts");
-		const { registerFleetLifecycleRoutes } = await import(
-			"../session-daemon/fleet-lifecycle-routes.ts"
-		);
-		const { startSessionPickerDaemon } = await import("../session-daemon/daemon.ts");
-		registerDaemonRoutes(ctx.app);
-		registerFleetLifecycleRoutes(ctx.app);
-		await startSessionPickerDaemon();
 	});
 
 	const _orchHandler = async (
