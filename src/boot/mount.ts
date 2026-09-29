@@ -2,20 +2,25 @@
  * @system cli-session
  * @status handwritten
  * @edit edit directly
- * Boot-time mount for @teamscala/cli-session. Registers:
- *   - History readers + parsers
- *   - Tmux policy sync boot hook
- *
- * The TypeScript session-picker daemon is RETIRED (apps/session-picker): the
- * picker is one Rust binary, tabs open only through fleetctl, no HTTP daemon
- * and no TS middleman. This mount used to register a `session-picker-daemon`
- * boot hook importing three `../session-daemon/*` modules that exist nowhere
- * in the workspace, so every consumer FATALed at boot (measured 2026-09-28,
- * the scala-agents-ui prod container move). Deleted, not guarded.
+ * Boot-time mount for @teamscala/cli-session: registers the history readers
+ * and the line parsers the session surface reads through
+ * @teamscala/session-contracts.
  *
  * SDK factories are registered by each per-SDK adapter package's own mount,
  * not by this package — cli-session is generic
  * over which CLI/SDK is in use.
+ *
+ * Retired from this mount, each because it declared a capability nothing
+ * derived (measured 2026-09-29):
+ *   - the TypeScript session-picker daemon hooks (apps/session-picker: the
+ *     picker is one Rust binary, tabs open only through fleetctl; the hooks
+ *     imported three ../session-daemon/* modules that exist nowhere, so every
+ *     consumer FATALed at boot — 2026-09-28, the scala-agents-ui prod move)
+ *   - the tmux-target-policy boot sync (the policy module it loaded had no
+ *     readers anywhere in the workspace)
+ *   - eleven orchestrators-* handlers that all answered 501 "Not
+ *     implemented" and had zero workspace consumers — a registered route is
+ *     a promise the surface makes; a handler that can never answer is not one
  */
 
 import type { MountContext } from "@teamscala/os/runtime-contracts/mount-context";
@@ -34,29 +39,4 @@ export async function mount(ctx: MountContext): Promise<void> {
 	registerParser("claude-stream-json", parseClaudeStreamJson);
 	registerParser("codex-jsonl", parseCodexJsonl);
 	registerParser("gemini-acp", parseAcpFrame);
-
-	ctx.registerBootHook("tmux-target-policy-sync", async () => {
-		const { syncTmuxTargetPolicy } = await import("../tmux-policy-sync");
-		await syncTmuxTargetPolicy();
-	});
-
-	const _orchHandler = async (
-		_req: Request,
-		_params: Record<string, string>,
-	): Promise<Response> => new Response("Not implemented", { status: 501 });
-	ctx.registerHandler("orchestrators-get", _orchHandler);
-	ctx.registerHandler("orchestrators-post", _orchHandler);
-	ctx.registerHandler("orchestrators-send", _orchHandler);
-	ctx.registerHandler("orchestrators-history", _orchHandler);
-	ctx.registerHandler("orchestrators-delete", _orchHandler);
-	ctx.registerHandler(
-		"orchestrators-events",
-		async (_req: Request, _params: Record<string, string>) =>
-			new Response("WebSocket upgrade required", { status: 400 }),
-	);
-	ctx.registerHandler("orchestrators-interrupt", _orchHandler);
-	ctx.registerHandler("orchestrators-compact", _orchHandler);
-	ctx.registerHandler("orchestrators-clear", _orchHandler);
-	ctx.registerHandler("orchestrators-model", _orchHandler);
-	ctx.registerHandler("orchestrators-session-check", _orchHandler);
 }

@@ -1,54 +1,36 @@
 {
-  "_generated": {
-    "system": "package-json@1.0.0",
-    "status": "generated",
-    "edit": "edit src/ — dependencies and exports derive from imports; everything else preserved"
-  },
-  "name": "@teamscala/cli-session",
-  "capability": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
-  "tier": "server",
-  "type": "module",
-  "version": "1.0.157",
-  "description": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
-  "sideEffects": false,
-  "imports": {
-    "#cli-session/*": "./src/*",
-    "#cli-session/*.ts": "./src/*.ts"
-  },
-  "files": [
-    "src"
-  ],
-  "dependencies": {
-    "@teamscala/cli-protocol": "*",
-    "@teamscala/db": "*",
-    "@teamscala/db-validation": "*",
-    "@teamscala/logger": "*",
-    "@teamscala/os": "*",
-    "@teamscala/session-contracts": "*",
-    "@teamscala/tmux-session": "*",
-    "valibot": "*"
-  },
-  "devDependencies": {
-    "bun-types": "*",
-    "@happy-dom/global-registrator": "*",
-    "@testing-library/react": "*"
-  },
-  "exports": {
-    "./boot/mount": "./src/boot/mount.ts",
-    "./boot/mount.ts": "./src/boot/mount.ts",
-    "./registry": "./src/registry.ts",
-    "./registry.ts": "./src/registry.ts",
-    "./session-picker-url": "./src/session-picker-url.ts",
-    "./session-picker-url.ts": "./src/session-picker-url.ts",
-    "./tmux-label": "./src/tmux-label.ts",
-    "./tmux-label.ts": "./src/tmux-label.ts",
-    "./tmux-policy-sync": "./src/tmux-policy-sync.ts",
-    "./tmux-policy-sync.ts": "./src/tmux-policy-sync.ts",
-    "./types": "./src/types.ts",
-    "./types.ts": "./src/types.ts"
-  },
-  "repository": "https://github.com/teamgbg/bun-server-cli-session",
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org"
-  }
+	"_generated": {
+		"system": "package-json@1.0.0",
+		"status": "generated",
+		"edit": "edit src/ — dependencies and exports derive from imports; everything else preserved"
+	},
+	"name": "@teamscala/cli-session",
+	"capability": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
+	"tier": "server",
+	"type": "module",
+	"version": "1.0.157",
+	"description": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
+	"sideEffects": false,
+	"imports": {
+		"#cli-session/*": "./src/*",
+		"#cli-session/*.ts": "./src/*.ts"
+	},
+	"files": [
+		"src"
+	],
+	"dependencies": {
+		"@teamscala/cli-protocol": "*",
+		"@teamscala/os": "*",
+		"@teamscala/session-contracts": "*"
+	},
+	"devDependencies": {
+		"bun-types": "*",
+		"@happy-dom/global-registrator": "*",
+		"@testing-library/react": "*"
+	},
+	"exports": {},
+	"repository": "https://github.com/teamgbg/bun-server-cli-session",
+	"publishConfig": {
+		"registry": "https://registry.npmjs.org"
+	}
 }
