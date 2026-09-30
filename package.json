@@ -1,6 +1,6 @@
 {
 	"_generated": {
-		"system": "package-json@1.0.0",
+		"system": "cli-session",
 		"status": "generated",
 		"edit": "edit src/ — dependencies and exports derive from imports; everything else preserved"
 	},
@@ -28,7 +28,12 @@
 		"@happy-dom/global-registrator": "*",
 		"@testing-library/react": "*"
 	},
-	"exports": {},
+	"exports": {
+		"./boot/mount": "./src/boot/mount.ts",
+		"./boot/mount.ts": "./src/boot/mount.ts",
+		"./session-picker-url": "./src/session-picker-url.ts",
+		"./session-picker-url.ts": "./src/session-picker-url.ts"
+	},
 	"repository": "https://github.com/teamgbg/bun-server-cli-session",
 	"publishConfig": {
 		"registry": "https://registry.npmjs.org"
