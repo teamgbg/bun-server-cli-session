@@ -8,7 +8,7 @@
 	"capability": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
 	"tier": "server",
 	"type": "module",
-	"version": "1.0.157",
+	"version": "1.0.159",
 	"description": "CLI session management — mounts history readers, parsers, picker daemon, and lifecycle boot hooks into a consumer boot context.",
 	"sideEffects": false,
 	"imports": {
